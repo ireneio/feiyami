@@ -43,6 +43,6 @@ export default {
   build: {
   },
   router: {
-    base: '/keiko15678/'
+    base: '/feiyami/'
   }
 }
