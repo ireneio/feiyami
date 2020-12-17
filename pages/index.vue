@@ -10,61 +10,66 @@
        <h5 class="banner__subtitle banner__subtitle--main">每日可领取3次任务</h5>
        <p class="banner__text banner__text--main">2020.08.11止</p>
      </div>
-     <div class="banner banner--md banner--md1" @click="toggleDetail = true">
+     <div class="banner banner--md banner--md1" @click="handleToggleDetail('silver', true)">
        <div class="banner__left">
         <h2 class="banner__title">白银会员</h2>
-        <h5 class="banner__subtitle" v-show="toggleDetail">每日可领取10次任务</h5>
-        <p class="banner__text" v-show="toggleDetail">[1.20元/条]</p>
+        <h5 class="banner__subtitle" v-show="toggleDetail['silver']">每日可领取10次任务</h5>
+        <p class="banner__text" v-show="toggleDetail['silver']">[1.20元/条]</p>
        </div>
        <div class="banner__right">
-         <div class="banner__money" :class="{ 'banner__money--spacedSmall': !toggleDetail }">￥330.00</div>
-         <button class="btn btn--primary" v-show="toggleDetail" @click="toggleDialog = true">立即加入</button>
+         <div class="banner__money" :class="{ 'banner__money--spacedSmall': !toggleDetail['silver'] }">￥330.00</div>
+         <button class="btn btn--primary" v-show="toggleDetail['silver']" @click="toggleDialog = true">立即加入</button>
        </div>
      </div>
-     <div class="banner banner--md banner--md2">
+     <div class="banner banner--md banner--md2" @click="handleToggleDetail('gold', true)">
        <div class="banner__left">
         <h2 class="banner__title">黄金会员</h2>
         <h5 class="banner__subtitle">每日可领取19次任务</h5>
        </div>
-       <div class="banner__right">
-         <div class="banner__money banner__money--spaced">￥660.00</div>
-       </div>
+        <div class="banner__right">
+         <div class="banner__money" :class="{ 'banner__money--spaced': !toggleDetail['gold'] }">￥660.00</div>
+         <button class="btn btn--primary" v-show="toggleDetail['gold']" @click="toggleDialog = true">立即加入</button>
+        </div>
      </div>
-     <div class="banner banner--md banner--md3">
+     <div class="banner banner--md banner--md3" @click="handleToggleDetail('plat', true)">
        <div class="banner__left">
         <h2 class="banner__title">铂金会员</h2>
         <h5 class="banner__subtitle">每日可领取28次任务</h5>
        </div>
        <div class="banner__right">
-         <div class="banner__money">￥990.00</div>
-       </div>
+         <div class="banner__money" :class="{ 'banner__money--spaced': !toggleDetail['plat'] }">￥990.00</div>
+         <button class="btn btn--primary" v-show="toggleDetail['plat']" @click="toggleDialog = true">立即加入</button>
+      </div>
      </div>
-     <div class="banner banner--md banner--md4">
+     <div class="banner banner--md banner--md4" @click="handleToggleDetail('dia', true)">
        <div class="banner__left">
         <h2 class="banner__title">钻石会员</h2>
         <h5 class="banner__subtitle">每日可领取99次任务</h5>
        </div>
        <div class="banner__right">
-         <div class="banner__money">￥2990.00</div>
-       </div>
+         <div class="banner__money" :class="{ 'banner__money--spaced': !toggleDetail['dia'] }">￥2990.00</div>
+         <button class="btn btn--primary" v-show="toggleDetail['dia']" @click="toggleDialog = true">立即加入</button>
+      </div>
      </div>
-     <div class="banner banner--md banner--md5">
+     <div class="banner banner--md banner--md5" @click="handleToggleDetail('vip', true)">
        <div class="banner__left">
         <h2 class="banner__title">荣耀会员</h2>
         <h5 class="banner__subtitle">每日可领取228次任务</h5>
        </div>
        <div class="banner__right">
-         <div class="banner__money">￥5940.00</div>
-       </div>
+         <div class="banner__money" :class="{ 'banner__money--spaced': !toggleDetail['vip'] }">￥5940.00</div>
+         <button class="btn btn--primary" v-show="toggleDetail['vip']" @click="toggleDialog = true">立即加入</button>
+      </div>
      </div>
-     <div class="banner banner--md banner--md6">
+     <div class="banner banner--md banner--md6" @click="handleToggleDetail('vvip', true)">
        <div class="banner__left">
         <h2 class="banner__title">尊耀会员</h2>
         <h5 class="banner__subtitle">每日可领取338次任务</h5>
        </div>
        <div class="banner__right">
-         <div class="banner__money">￥9899.00</div>
-       </div>
+         <div class="banner__money" :class="{ 'banner__money--spaced': !toggleDetail['vvip'] }">￥9899.00</div>
+         <button class="btn btn--primary" v-show="toggleDetail['vvip']" @click="toggleDialog = true">立即加入</button>
+      </div>
      </div>
    </body>
    <footer class="footer">
@@ -89,11 +94,9 @@
      <div class="floatingBtn__icon"></div>
    </button>
    <div class="mask" v-show="toggleDialog"></div>
-   <!-- :class="{ 'mask--show': toggleDialog }" -->
    <div class="dialog" v-show="toggleDialog">
-     <!-- :class="{ 'dialog--show': toggleDialog }" -->
      <div class="dialog__title">提示</div>
-     <p class="dialog__text">確定花費330.00元 <br /> 成為12個月的白银會員嗎?</p>
+     <p class="dialog__text">確定花費{{ price }}元 <br /> 成為12個月的{{ membershipType }}會員嗎?</p>
      <div class="dialog__btnBox">
        <button class="btn btn--secondary btn--fat" @click="toggleDialog = false">取消</button>
        <button class="btn btn--conseq btn--primary2 btn--fat" @click="toggleDialog = false">确定</button>
@@ -107,7 +110,56 @@ export default {
   data() {
     return {
       toggleDialog: false,
-      toggleDetail: false
+      toggleDetail: {
+        'silver': false,
+        'gold': false,
+        'plat': false,
+        'dia': false,
+        'vip': false,
+        'vvip': false,
+      }
+    }
+  },
+  computed: {
+    price() {
+      const priceMap = {
+        'silver': 330,
+        'gold': 660,
+        'plat': 990,
+        'dia': 2990,
+        'vip': 5940,
+        'vvip': 9899,
+      }
+      const activeItem = Object.keys(this.toggleDetail).find(item => this.toggleDetail[item])
+      if(activeItem) {
+        return priceMap[activeItem]
+      } else {
+        return 0
+      }
+    },
+    membershipType() {
+      const membershipMap = {
+        'silver': '白銀',
+        'gold': '黃金',
+        'plat': '柏金',
+        'dia': '鑽石',
+        'vip': '榮耀',
+        'vvip': '尊耀',
+      }
+      const activeItem = Object.keys(this.toggleDetail).find(item => this.toggleDetail[item])
+      if(activeItem) {
+        return membershipMap[activeItem]
+      } else {
+        return ''
+      }
+    }
+  },
+  methods: {
+    handleToggleDetail(type, action) {
+      Object.keys(this.toggleDetail).forEach(item => {
+        this.toggleDetail[item] = false
+      })
+      this.toggleDetail[type] = action
     }
   }
 }
