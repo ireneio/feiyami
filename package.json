@@ -1,21 +1,22 @@
 {
-  "name": "feiyami",
+  "name": "hw1-htmlcss",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "build": "cross-env NUXT_PORT=3000 NUXT_HOST=0.0.0.0 nuxt build",
+    "start": "cross-env NUXT_PORT=3000 NUXT_HOST=0.0.0.0 nuxt start",
+    "generate": "cross-env NUXT_PORT=3000 NUXT_HOST=0.0.0.0 nuxt generate",
     "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.6"
+    "cross-env": "^7.0.3",
+    "nuxt": "^2.14.6",
+    "sass": "^1.51.0"
   },
   "devDependencies": {
-    "node-sass": "^5.0.0",
     "push-dir": "^0.4.1",
     "sass-loader": "^10.1.0"
   }
